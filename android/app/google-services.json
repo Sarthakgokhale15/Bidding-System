@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "569260643938",
+    "project_id": "e-farm-c90f3",
+    "storage_bucket": "e-farm-c90f3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569260643938:android:341f0279abb8b44c93a33b",
+        "android_client_info": {
+          "package_name": "com.eagri.e_agri_farmers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "569260643938-lpbj09ctbh7mrlgvpsvatshm0bgkgbg1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBh0ESUDtPDFxzzcaebrQdpl1l5UHbEkqA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "569260643938-lpbj09ctbh7mrlgvpsvatshm0bgkgbg1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "569260643938-utentasl6htgkspk64h0c9vuvdl22mnc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.eFarm"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569260643938:android:4dd0d68961b512a693a33b",
+        "android_client_info": {
+          "package_name": "com.example.e_farm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "569260643938-lpbj09ctbh7mrlgvpsvatshm0bgkgbg1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBh0ESUDtPDFxzzcaebrQdpl1l5UHbEkqA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "569260643938-lpbj09ctbh7mrlgvpsvatshm0bgkgbg1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "569260643938-utentasl6htgkspk64h0c9vuvdl22mnc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.eFarm"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
