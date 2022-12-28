@@ -1,7 +1,11 @@
-import 'dart:io';
 // import 'package:universal_io/io.dart';
 // import 'dart:html';
 // import 'dart:io';
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:flutter/foundation.dart'
+    show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
 import 'package:e_agri_farmers/constants/colors/constant_colors.dart';
 import 'package:e_agri_farmers/helper/button_helper.dart';
@@ -26,8 +30,9 @@ TextEditingController variety = TextEditingController();
 TextEditingController village = TextEditingController();
 TextEditingController offerPerUnit = TextEditingController();
 late String certificateURL;
-PickedFile? _profileImage;
-// PlatformFile? _profileImage;
+// PickedFile? _profileImage;
+XFile? _profileImage;
+Uint8List webImage = Uint8List(8);
 bool transportFacilitated = false;
 String? city = "Select District";
 String? state = "Select State";
@@ -96,9 +101,12 @@ class _AddCropScreenFarmerState extends State<AddCropScreenFarmer> {
                 _profileImage != null
                     ? SizedBox(
                         width: MediaQuery.of(context).size.width * 0.8,
-                        child: Image(
-                          image: FileImage(File(_profileImage!.path)),
-                        ),
+                        child: (kIsWeb)
+                            ? Image.memory(webImage)
+                            : Image.file(File(_profileImage!.path)),
+                        // Image(
+                        //   image: FileImage(File(_profileImage!.path)),
+                        // ),
                       )
                     : Container(),
                 Row(
@@ -239,20 +247,55 @@ class _AddCropScreenFarmerState extends State<AddCropScreenFarmer> {
   }
 
   void _imgFromCamera() async {
-    PickedFile? image = (await ImagePicker.platform
-        .pickImage(source: ImageSource.camera, imageQuality: 40));
+    // PickedFile? image = (await ImagePicker.platform
+    //     .pickImage(source: ImageSource.camera, imageQuality: 40));
 
-    setState(() {
-      _profileImage = image!;
-    });
+    // setState(() {
+    //   _profileImage = image!;
+    // });
+    if (!kIsWeb) {
+      final ImagePicker _picker = ImagePicker();
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      setState(() {
+        _profileImage = image!;
+      });
+    } else if (kIsWeb) {
+      final ImagePicker _picker = ImagePicker();
+      final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+      if (image != null) {
+        var selected = await image.readAsBytes();
+        setState(() {
+          webImage = selected;
+          _profileImage = XFile("a");
+        });
+      }
+    }
   }
 
   void _imgFromGallery() async {
-    PickedFile? image = await ImagePicker.platform
-        .pickImage(source: ImageSource.gallery, imageQuality: 40);
-    setState(() {
-      _profileImage = image!;
-    });
+    // PickedFile? image = (await ImagePicker.platform
+    //     .pickImage(source: ImageSource.gallery, imageQuality: 40));
+
+    // setState(() {
+    //   _profileImage = image!;
+    // });
+    if (!kIsWeb) {
+      final ImagePicker _picker = ImagePicker();
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      setState(() {
+        _profileImage = image!;
+      });
+    } else if (kIsWeb) {
+      final ImagePicker _picker = ImagePicker();
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        var selected = await image.readAsBytes();
+        setState(() {
+          webImage = selected;
+          _profileImage = XFile("a");
+        });
+      }
+    }
   }
 
   void _showPicker(context) async {
@@ -454,8 +497,9 @@ class _AddCropScreenFarmerState extends State<AddCropScreenFarmer> {
       Reference referenceProfile = storage.ref().child(
           "certificates/${FirebaseAuth.instance.currentUser?.phoneNumber}/${DateTime.now().toString()}");
 
-      UploadTask uploadTask =
-          referenceProfile.putFile(File(_profileImage!.path));
+      UploadTask uploadTask = (kIsWeb)
+          ? referenceProfile.putFile(File(webImage as String))
+          : referenceProfile.putFile(File(_profileImage!.path));
 
       var downloadURL = await (await uploadTask.whenComplete(() => null))
           .ref
